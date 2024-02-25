@@ -11,8 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('declaracaos', function (Blueprint $table) {
+        Schema::create('declaracoes', function (Blueprint $table) {
             $table->id();
+            $table->string('hash');
+            $table->dateTime('data');
+            $table->foreignId('aluno_id')->constrained();
+            $table->foreignId('comprovante_id')->constrained();
             $table->timestamps();
         });
     }

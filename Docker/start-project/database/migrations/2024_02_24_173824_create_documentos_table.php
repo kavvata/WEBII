@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('documentos', function (Blueprint $table) {
             $table->id();
+            $table->string('url');
+            $table->float('horas_in');
+            $table->string('status');
+            $table->string('comentario');
+            $table->float('horas_out');
+            $table->foreignId('categoria_id')->constrained();
+            $table->foreignId('user_id')->constrained();
             $table->timestamps();
         });
     }

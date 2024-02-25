@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('alunos', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->string('cpf');
+            $table->string('email');
+            $table->string('senha');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('curso_id')->constrained();
+            $table->foreignId('turma_id')->constrained();
             $table->timestamps();
         });
     }
@@ -20,6 +27,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
+
     public function down(): void
     {
         Schema::dropIfExists('alunos');

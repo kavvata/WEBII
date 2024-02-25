@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('categorias', function (Blueprint $table) {
             $table->id();
+            $table->string('nome');
+            $table->float('maximo_horas');
+            $table->foreignId('curso_id')->constrained();
             $table->timestamps();
         });
     }

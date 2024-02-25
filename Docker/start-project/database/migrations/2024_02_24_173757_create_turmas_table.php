@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('turmas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('curso_id')->constrained();
+            $table->integer('ano');
             $table->timestamps();
         });
     }
