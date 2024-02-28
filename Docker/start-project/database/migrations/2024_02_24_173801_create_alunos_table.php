@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nome');
             $table->string('cpf');
             $table->string('email');
-            $table->string('senha');
+            $table->string('password');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('curso_id')->constrained();
             $table->foreignId('turma_id')->constrained();
