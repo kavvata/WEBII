@@ -22,14 +22,53 @@ class AlunoController extends Controller {
         return $data;    
     }
 
+    public function register() {
+        
+        $cursos = (new CursoRepository())->selectAll();
+        $turmas = (new TurmaRepository())->selectAll();
+        return view('aluno.register', compact(['cursos', 'turmas']));
+    }
+
+    public function storeRegister(Request $request) {
+        
+        $objCurso = (new CursoRepository())->findById($request->curso_id);
+        $objTurma = (new TurmaRepository())->findById($request->turma_id);
+        
+        if(isset($objCurso) && isset($objTurma)) {
+            $obj = new Aluno();
+            $obj->nome = mb_strtoupper($request->nome, 'UTF-8');
+            $obj->cpf = $request->cpf;
+            $obj->email = mb_strtolower($request->email, 'UTF-8');
+            $obj->password = Hash::make($request->password); 
+            $obj->curso()->associate($objCurso);
+            $obj->turma()->associate($objTurma);
+            $this->repository->save($obj);
+
+            return view('message')
+                    ->with('template', "site")
+                    ->with('type', "success")
+                    ->with('titulo', "")
+                    ->with('message', "[OK] Registro efetuado com sucesso!")
+                    ->with('link', "site");
+        }
+        
+        return view('message')
+                    ->with('template', "site")
+                    ->with('type', "danger")
+                    ->with('titulo', "")
+                    ->with('message', "Não foi possível efetuar o registro!")
+                    ->with('link', "site");
+    }
+
     public function create() {
         $cursos = (new CursoRepository())->selectAll();
-        return view('aluno.create', compact(['cursos']));
+        $turmas = (new TurmaRepository())->selectAll();
+        return view('aluno.create', compact(['cursos', 'turmas']));
     }
 
     public function store(Request $request) {
 
-        $this->validateRows($request);
+        // $this->validateRows($request);
 
         $objCurso = (new CursoRepository())->findById($request->curso_id);
         $objTurma = (new TurmaRepository())->findById($request->turma_id);
@@ -92,9 +131,11 @@ class AlunoController extends Controller {
         
         $regras = [
             'nome' => 'required|min:10|max:200',
-            'cpf' => 'required|min:11|max:11',
+            'cpf' => 'required|min:11|max:11|unique:alunos',
             'email' => 'required|min:8|max:200|unique:alunos',
             'senha' => 'required|min:6|max:20',
+            'curso' => 'required',
+            'turma' => 'required',
             'confirmacao' => 'required|same:senha'
         ];
         $msgs = [

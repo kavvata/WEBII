@@ -18,11 +18,15 @@ class CursoController extends Controller {
 
     public function index() {
         $data = $this->repository->selectAllWith(['eixo', 'nivel']);
-        return $data;
+        return view('curso.index', compact('data'));
+        // return $data;
     }
 
     public function create() {
-        // retorna, para o usuário, a view de criação de Curso
+
+        $eixos = (new EixoRepository())->selectAll();
+        $niveis = (new NivelRepository())->selectAll();
+        return view('curso.create', compact(['eixos', 'niveis']));
     }
 
     public function store(Request $request) {
@@ -38,20 +42,28 @@ class CursoController extends Controller {
             $obj->eixo()->associate($objEixo);
             $obj->nivel()->associate($objNivel);
             $this->repository->save($obj);
-            return "<h1>Store - OK!</h1>";
+            return redirect()->route('curso.index');
         }
         
-        return "<h1>Store - Not found Eixo or Nível!</h1>";
+        return view('message')
+                    ->with('template', "main")
+                    ->with('type', "danger")
+                    ->with('titulo', "OPERAÇÃO INVÁLIDA")
+                    ->with('message', "Não foi possível efetuar o registro!")
+                    ->with('link', "curso.index");
     }
 
     public function show(string $id) {
-        $data = $this->repository->findById($id);
-        return $data;
+        $data = $this->repository->findByIdWith(['eixo', 'nivel'], $id);
+        return view('curso.show', compact('data'));
+        // return $data;
     }   
 
     public function edit(string $id) {
-        // $data = $this->repository->findById($id);
-        // retorna, para o usuário, a view de edição de Curso - passa objeto $data
+        $data = $this->repository->findById($id);
+        $eixos = (new EixoRepository())->selectAll();
+        $niveis = (new NivelRepository())->selectAll();
+        return view('curso.edit', compact(['data', 'eixos', 'niveis']));
     }
 
     public function update(Request $request, string $id) {
@@ -67,17 +79,27 @@ class CursoController extends Controller {
             $obj->eixo()->associate($objEixo);
             $obj->nivel()->associate($objNivel);
             $this->repository->save($obj);
-            return "<h1>Upate - OK!</h1>";
+            return redirect()->route('curso.index');
         }
 
-        return "<h1>Upate - Not found Curso or Eixo or Nível!</h1>";
+        return view('message')
+                    ->with('template', "main")
+                    ->with('type', "danger")
+                    ->with('titulo', "OPERAÇÃO INVÁLIDA")
+                    ->with('message', "Não foi possível efetuar o registro!")
+                    ->with('link', "curso.index");
     }
 
     public function destroy(string $id) {
         if($this->repository->delete($id))  {
-            return "<h1>Delete - OK!</h1>";
+            return redirect()->route('curso.index');
         }
         
-        return "<h1>Delete - Not found Curso!</h1>";
+        return view('message')
+                    ->with('template', "main")
+                    ->with('type', "danger")
+                    ->with('titulo', "OPERAÇÃO INVÁLIDA")
+                    ->with('message', "Não foi possível efetuar o registro!")
+                    ->with('link', "curso.index");
     }
 }

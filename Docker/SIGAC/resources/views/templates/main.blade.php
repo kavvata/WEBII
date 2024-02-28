@@ -7,8 +7,12 @@
 		<link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}"/>
 		<link rel="stylesheet" href="{{asset('css/all.min.css')}}"/> 
 		<link rel="stylesheet" href="{{asset('css/style.css')}}"/> 
+		<style> 
+			.input-group-text { 
+				min-width: 100px;
+			}
+		</style>
 	</head> 
-
 	<body> 
 		<div class="container-fluid p-0 d-flex h-100"> 
 			<div class="d-flex flex-column flex-shrink-0 p-3 bg-success text-white offcanvas-md offcanvas-start" id="sidebar"> 
@@ -30,22 +34,22 @@
 						</a> 
 						<ul id="admin" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar"> 					
 							<li class="sidebar-item"> 
-								<a href="#" class="sidebar-link"> 
+								<a href="" class="sidebar-link"> 
 									<span class="ms-3">Coordenadores</span> 
 								</a> 
 							</li> 
 							<li class="sidebar-item"> 
-								<a href="#" class="sidebar-link"> 
+								<a href="{{route('curso.index')}}" class="sidebar-link"> 
 									<span class="ms-3">Cursos</span> 
 								</a> 
 							</li> 
 							<li class="sidebar-item"> 
-								<a href="#" class="sidebar-link"> 
+								<a href="{{route('curso.index')}}" class="sidebar-link"> 
 									<span class="ms-3">Eixos</span> 
 								</a> 
 							</li>
 							<li class="sidebar-item"> 
-								<a href="#" class="sidebar-link"> 
+								<a href="{{route('nivel.index')}}" class="sidebar-link"> 
 									<span class="ms-3">Níveis de Ensino</span> 
 								</a> 
 							</li>  
@@ -183,7 +187,7 @@
 				<div class="p-4"> 
 					<nav style="--bs-breadcrumb-divider:'>'; font-size:14px"> 
 						<!-- TÍTULO -->
-						<span class="fs-2 fw-bold"> {{ $titulo }} </span> 
+						<span class="fs-2 text-success"> {{ $titulo }} </span> 
 					</nav> 
 					<hr> 
 					<!-- CONTEÚDO -->
@@ -198,5 +202,8 @@
 	</body> 
 
 	<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>  
+	<script src="{{asset('js/jquery-3.6.0.min.js')}}"></script>  
+	
+	@yield('script')
 
 </html>

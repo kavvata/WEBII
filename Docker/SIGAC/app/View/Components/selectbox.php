@@ -12,12 +12,18 @@ class selectbox extends Component {
     public $label;
     public $color;
     public $data;
+    public $field;
+    public $disabled;
+    public $select;
 
-    public function __construct($name, $label, $color, $data) {
+    public function __construct($name, $label, $color, $data, $field, $disabled, $select) {
         $this->name = $name;
         $this->label = $label;
         $this->color = $color;
         $this->data = $data;
+        $this->field = $field;
+        $this->disabled = $disabled;
+        $this->select = $select;
     }
 
     public function render() {
