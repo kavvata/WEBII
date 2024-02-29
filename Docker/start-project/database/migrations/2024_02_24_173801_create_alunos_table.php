@@ -21,6 +21,7 @@ return new class extends Migration
             $table->foreignId('curso_id')->constrained();
             $table->foreignId('turma_id')->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

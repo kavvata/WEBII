@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('curso_id')->constrained();
             $table->integer('ano');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

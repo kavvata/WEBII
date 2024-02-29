@@ -17,6 +17,7 @@ return new class extends Migration
             $table->dateTime('data');
             $table->foreignId('aluno_id')->constrained();
             $table->foreignId('comprovante_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

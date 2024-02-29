@@ -18,6 +18,7 @@ return new class extends Migration
             $table->float('total_horas')        ;
             $table->foreignId('nivel_id')->constrained(table: 'niveis');
             $table->foreignId('eixo_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
 

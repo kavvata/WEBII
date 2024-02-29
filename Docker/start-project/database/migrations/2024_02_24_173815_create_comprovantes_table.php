@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('categoria_id')->constrained();
             $table->foreignId('aluno_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

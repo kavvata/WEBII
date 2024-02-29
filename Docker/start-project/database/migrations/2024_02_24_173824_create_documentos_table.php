@@ -20,6 +20,7 @@ return new class extends Migration
             $table->float('horas_out');
             $table->foreignId('categoria_id')->constrained();
             $table->foreignId('user_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }
