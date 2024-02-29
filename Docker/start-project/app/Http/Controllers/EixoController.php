@@ -71,8 +71,8 @@ class EixoController extends Controller
             return "<h1>Update - Not found Eixo!</h1>";
         }
 
-        $novo_nome = mb_strtoupper($request->nome, 'UTF-8');
-        $obj->nome = $novo_nome;
+        $obj->nome = mb_strtoupper($request->nome, 'UTF-8');
+
         $this->repository->save($obj);
 
         return "<h1>Update - OK!</h1>";
@@ -81,8 +81,12 @@ class EixoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): void
+    public function destroy(string $id): bool
     {
-        //
+        if (!$this->repository->delete($id)) {
+            return "<h1>Delete - Not found Eixo!</h1>";
+        }
+
+        return "<h1>Delete - OK!</h1>";
     }
 }
