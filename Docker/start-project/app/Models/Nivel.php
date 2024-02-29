@@ -10,4 +10,6 @@ class Nivel extends Model
 {
     use SoftDeletes;
     use HasFactory;
+
+    protected $table = "niveis";
 }
