@@ -74,7 +74,7 @@ class NivelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id): bool
+    public function destroy(string $id): string
     {
         if (!$this->repository->delete($id)) {
             return '<h1>Delete - Not found Eixo!</h1>';
