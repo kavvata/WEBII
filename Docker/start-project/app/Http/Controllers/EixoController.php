@@ -10,7 +10,8 @@ class EixoController extends Controller
 {
     protected EixoRepository $repository;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->repository = new EixoRepository();
     }
 
@@ -40,7 +41,7 @@ class EixoController extends Controller
         $obj->nome = mb_strtoupper($request->nome, 'UTF-8');
         $this->repository->save($obj);
 
-        return "<h1>Store - OK!</h1>";
+        return '<h1>Store - OK!</h1>';
     }
 
     /**
@@ -67,15 +68,15 @@ class EixoController extends Controller
     {
         $obj = $this->repository->findById($id);
 
-        if(!isset($obj)) {
-            return "<h1>Update - Not found Eixo!</h1>";
+        if (!isset($obj)) {
+            return '<h1>Update - Not found Eixo!</h1>';
         }
 
         $obj->nome = mb_strtoupper($request->nome, 'UTF-8');
 
         $this->repository->save($obj);
 
-        return "<h1>Update - OK!</h1>";
+        return '<h1>Update - OK!</h1>';
     }
 
     /**
@@ -84,9 +85,9 @@ class EixoController extends Controller
     public function destroy(string $id): bool
     {
         if (!$this->repository->delete($id)) {
-            return "<h1>Delete - Not found Eixo!</h1>";
+            return '<h1>Delete - Not found Eixo!</h1>';
         }
 
-        return "<h1>Delete - OK!</h1>";
+        return '<h1>Delete - OK!</h1>';
     }
 }

@@ -4,34 +4,42 @@ namespace App\Repositories;
 
 use Exception;
 
-class Repository {
+class Repository
+{
     protected object $model;
 
-    protected function __construct(object $model) {
+    protected function __construct(object $model)
+    {
         $this->model = $model;
     }
 
-    public function selectAll() : object {
+    public function selectAll(): object
+    {
         return $this->model->all();
     }
 
-    public function findById(int $id) : object {
+    public function findById(int $id): object
+    {
         return $this->model->find($id);
     }
 
-    public function findDeleteById(int $id) : object {
+    public function findDeleteById(int $id): object
+    {
         return $this->model->onlyTrashed()->find($id);
     }
 
-    public function findByColumn($column, $value) : object {
+    public function findByColumn($column, $value): object
+    {
         return $this->model->where($column, $value)->get();
     }
 
-    public function findFirstByColumn($column, $value) : object {
+    public function findFirstByColumn($column, $value): object
+    {
         return $this->model->where($column, $value)->get()->first();
     }
 
-    public function save($obj): bool {
+    public function save($obj): bool
+    {
         try {
             $obj->save();
             return true;
@@ -40,10 +48,11 @@ class Repository {
         }
     }
 
-    public function delete(int $id) : bool {
+    public function delete(int $id): bool
+    {
         $obj = $this->findById($id);
 
-        if(!isset($obj)) {
+        if (!isset($obj)) {
             return false;
         }
 
@@ -55,10 +64,11 @@ class Repository {
         }
     }
 
-    public function restore($id): bool {
+    public function restore($id): bool
+    {
         $obj = $this->findById($id);
 
-        if(isset($obj)) {
+        if (isset($obj)) {
             return false;
         }
 
@@ -69,5 +79,4 @@ class Repository {
             dd($e);
         }
     }
-
 }
