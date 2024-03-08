@@ -2,11 +2,12 @@
 
 namespace App\Repositories;
 
+use Illuminate\Support\Facades\DB;
 use Exception;
 
 class Repository
 {
-    protected object $model;
+    protected $model;
 
     protected function __construct(object $model)
     {
@@ -64,7 +65,7 @@ class Repository
         }
     }
 
-    public function restore($id): bool
+    public function restore(int $id): bool
     {
         $obj = $this->findById($id);
 
@@ -78,5 +79,53 @@ class Repository
         } catch (Exception $e) {
             dd($e);
         }
+    }
+
+    public function createRule(array $keys, array $ids): array
+    {
+        $arr = array();
+
+        for ($i = 0; $i < count($ids); $i++) {
+            $arr[$i] = [$keys[$i], (integer) $ids[$i]];
+        }
+
+        return $arr;
+    }
+
+    public function findByCompositeId(array $keys, array $ids)
+    {
+        return $this->model::where($this->createRule($keys, $ids))->first();
+    }
+
+    public function findByCompositeIdWith(array $keys, array $ids, array $orms)
+    {
+        return $this->model::with($orms)
+            ->where($this->createRule($keys, $ids))
+            ->first();
+    }
+
+    public function updateCompositeId($keys, $ids, $table, $values)
+    {
+        try {
+            DB::table($table)
+                ->where($this->createRule($keys, $ids))
+                ->update($values);
+
+            return true;
+        } catch (Exception $e) {
+            dd($e);
+        }
+    }
+
+    public function deleteCompositeId($keys, $ids, $table)
+    {
+        try {
+            DB::table($table)->where($this->createRule($keys, $ids))->delete();
+
+            return true;
+        } catch (Exception $e) {
+            dd($e);
+        }
+        return false;
     }
 }
