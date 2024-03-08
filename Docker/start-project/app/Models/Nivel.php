@@ -11,5 +11,10 @@ class Nivel extends Model
     use SoftDeletes;
     use HasFactory;
 
-    protected $table = "niveis";
+    protected $table = 'niveis';
+
+    public function curso()
+    {
+        return $this->hasMany('\App\Models\Curso');
+    }
 }
