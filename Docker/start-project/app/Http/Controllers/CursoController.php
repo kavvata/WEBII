@@ -62,9 +62,9 @@ class CursoController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id): void
+    public function show(string $id)
     {
-        $curso = $this->repository->findById($id);
+        return $this->repository->findById($id);
     }
 
     /**
