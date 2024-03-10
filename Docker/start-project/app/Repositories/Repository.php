@@ -24,6 +24,11 @@ class Repository
         return $this->model->find($id);
     }
 
+    public function findByIdWith(int $id, array $orms): object
+    {
+        return $this->model::with($orms)->find($id);
+    }
+
     public function findDeleteById(int $id): object
     {
         return $this->model->onlyTrashed()->find($id);
