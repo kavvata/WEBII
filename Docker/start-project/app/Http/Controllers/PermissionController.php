@@ -82,7 +82,6 @@ class PermissionController extends Controller
      */
     public function update(Request $request, string $id): string
     {
-        // FIXME: Permission not found em permissao existente.
         $permission = $this->repository->findByCompositeId(Permission::getKeys(), explode('_', $id));
 
         if (!isset($permission)) {
