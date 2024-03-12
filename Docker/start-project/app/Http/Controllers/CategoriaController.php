@@ -100,6 +100,8 @@ class CategoriaController extends Controller
         $categoria->maximo_horas = $request->maximo_horas;
         $categoria->curso()->associate($curso);
         $this->repository->save($categoria);
+
+        return '<h1>Update - OK!</h1>';
     }
 
     /**
