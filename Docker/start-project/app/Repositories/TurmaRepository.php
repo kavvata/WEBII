@@ -10,9 +10,4 @@ class TurmaRepository extends Repository
     {
         parent::__construct(new Turma());
     }
-
-    public function selectAllWith(array $orm)
-    {
-        return $this->model::with($orm)->get();
-    }
 }

@@ -10,9 +10,4 @@ class CursoRepository extends Repository
     {
         parent::__construct(new Curso);
     }
-
-    public function selectAllWith(array $orm)
-    {
-        return $this->model::with($orm)->get();
-    }
 }

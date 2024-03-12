@@ -19,6 +19,11 @@ class Repository
         return $this->model->all();
     }
 
+    public function selectAllWith(array $orms): mixed
+    {
+        return $this->model::with($orms)->get();
+    }
+
     public function findById(int $id): object
     {
         return $this->model->find($id);

@@ -10,9 +10,4 @@ class PermissionRepository extends Repository
     {
         parent::__construct(new Permission());
     }
-
-    public function selectAllWith(array $orm): mixed
-    {
-        return $this->model::with($orm)->get();
-    }
 }
