@@ -114,7 +114,7 @@ class Repository
             ->first();
     }
 
-    public function updateCompositeId($keys, $ids, $table, $values)
+    public function updateCompositeId($keys, $ids, $table, $values): bool
     {
         try {
             DB::table($table)
@@ -125,9 +125,11 @@ class Repository
         } catch (Exception $e) {
             dd($e);
         }
+
+        return false;
     }
 
-    public function deleteCompositeId($keys, $ids, $table)
+    public function deleteCompositeId($keys, $ids, $table): bool
     {
         try {
             DB::table($table)->where($this->createRule($keys, $ids))->delete();
