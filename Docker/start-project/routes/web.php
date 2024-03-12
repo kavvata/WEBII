@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TurmaController;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,4 @@ Route::resource('/eixo', 'App\Http\Controllers\EixoController');
 Route::resource('/nivel', 'App\Http\Controllers\NivelController');
 Route::resource('/permission', PermissionController::class);
 Route::resource('/turma', TurmaController::class);
+Route::resource('/categoria', CategoriaController::class);
