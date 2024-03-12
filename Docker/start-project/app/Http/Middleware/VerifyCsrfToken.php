@@ -18,5 +18,6 @@ class VerifyCsrfToken extends Middleware
         '/permission*',
         '/turma*',
         '/categoria*',
+        '/user*',
     ];
 }

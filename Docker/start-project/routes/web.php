@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TurmaController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,3 +26,4 @@ Route::resource('/nivel', 'App\Http\Controllers\NivelController');
 Route::resource('/permission', PermissionController::class);
 Route::resource('/turma', TurmaController::class);
 Route::resource('/categoria', CategoriaController::class);
+Route::resource('/user', UserController::class);
