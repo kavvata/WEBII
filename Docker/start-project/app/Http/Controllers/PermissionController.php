@@ -124,7 +124,7 @@ class PermissionController extends Controller
         );
 
         if (!$isSucesso) {
-            return '<h1> Update - Permission not found. </h1>';
+            return '<h1> Delete - Permission not found. </h1>';
         }
 
         return '<h1> Delete - OK </h1>';
