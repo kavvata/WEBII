@@ -66,9 +66,15 @@ class NivelController extends Controller
      */
     public function update(Request $request, string $id): string
     {
-        $obj = $this->repository->findById($id);
-        if (!isset($obj))
+        $nivel = $this->repository->findById($id);
+        if (!isset($nivel)) {
             return '<h1>Update - Not found Nivel!</h1>';
+        }
+
+        $nivel->nome = mb_strtoupper($request->nome, 'UTF-8');
+        $this->repository->save($nivel);
+
+        return '<h1>Update - OK!</h1>';
     }
 
     /**
