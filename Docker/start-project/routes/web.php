@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TurmaController;
@@ -27,3 +28,4 @@ Route::resource('/permission', PermissionController::class);
 Route::resource('/turma', TurmaController::class);
 Route::resource('/categoria', CategoriaController::class);
 Route::resource('/user', UserController::class);
+Route::resource('/aluno', AlunoController::class);
