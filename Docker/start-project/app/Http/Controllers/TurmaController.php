@@ -90,7 +90,7 @@ class TurmaController extends Controller
             return '<h1>Update - Turma not found</h1>';
         }
 
-        $curso = (new CursoRepository)->findById($request->curso_id);
+        $curso = (new CursoRepository())->findById($request->curso_id);
 
         if (!isset($curso)) {
             return '<h1>Update - Curso not found</h1>';
