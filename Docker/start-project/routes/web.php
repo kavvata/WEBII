@@ -3,6 +3,7 @@
 use App\Http\Controllers\AlunoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ComprovanteController;
+use App\Http\Controllers\DeclaracaoController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\UserController;
@@ -31,3 +32,4 @@ Route::resource('/categoria', CategoriaController::class);
 Route::resource('/user', UserController::class);
 Route::resource('/aluno', AlunoController::class);
 Route::resource('/comprovante', ComprovanteController::class);
+Route::resource('/declaracao', DeclaracaoController::class);
