@@ -14,12 +14,12 @@ class AlunoSeeder extends Seeder {
         $data = [
             [   
                 "nome" => "LÚCIA EDUARDA SILVA ALVES",
-                "cpf" => "000.000.000-01",
+                "cpf" => "00000000001",
                 "email" => "lucia.alves@gmail.com", 
                 "password" => Hash::make('123lucia123'), 
                 "user_id" => 2,
                 "curso_id" => 2,
-                "turma_id" => 6,
+                "turma_id" => 4,
             ],
         ];
         DB::table('alunos')->insert($data);
