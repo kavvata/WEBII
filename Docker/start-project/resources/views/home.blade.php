@@ -1,5 +1,5 @@
 @extends('templates/main', ['titulo'=>'Home'])
 
 @section('conteudo')
-<h1>Home</h1>
+<h2>Bem-vindo, novamente!</h2>
 @endsection
