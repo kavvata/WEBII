@@ -21,7 +21,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         @foreach ($role['resources'] as $resource)
-                        <li><a href="#" class="dropdown-item">{{ $resource['nome'] }}</a></li>
+                        <li><a href="{{ route($resource['route']) }}" class="dropdown-item">{{ $resource['nome'] }}</a></li>
                         @endforeach
                     </ul>
                 </li>

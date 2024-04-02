@@ -19,9 +19,12 @@ class NivelController extends Controller
      * Display a listing of the resource.
      */
     public function index(): object
+    public function index()
     {
         $data = $this->repository->selectAll();
         return $data;
+        $data = $this->repository->selectAllWith(['curso']);
+        return view('nivel.index', compact('data'));
     }
 
     /**
