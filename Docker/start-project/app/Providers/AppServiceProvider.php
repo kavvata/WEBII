@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Components\Datatable;
 use App\View\Components\Navbar;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -22,5 +23,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Blade::component('navbar', Navbar::class);
+        Blade::component('datatable', Datatable::class);
     }
 }
