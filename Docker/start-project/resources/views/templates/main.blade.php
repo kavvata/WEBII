@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    @include('components.navbar', ['roles' => [
+    <x-navbar :roles="[
     [
       'nome' => 'Administrador',
       'resources' => [
@@ -21,7 +21,7 @@
             ]
         ]
     ]
-    ]])
+    ]"></x-navbar>
     @yield('conteudo')
 </body>
 <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>

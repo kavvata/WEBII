@@ -8,15 +8,14 @@ use Closure;
 
 class Navbar extends Component
 {
-    public $role;
+    public $roles;
 
     /**
      * Create a new component instance.
      */
-    public function __construct($role)
+    public function __construct($roles)
     {
-        $this->role->nome = $role->nome;
-        $this->role->resources = $role->resources;
+        $this->roles = $roles;
     }
 
     /**
