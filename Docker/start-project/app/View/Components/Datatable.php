@@ -2,7 +2,9 @@
 
 namespace App\View\Components;
 
+use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
+use Closure;
 
 class Datatable extends Component
 {
@@ -31,9 +33,8 @@ class Datatable extends Component
         $this->dados = $dados;
     }
 
-    public function render()
+    public function render(): View|Closure|string
     {
         return view('components.datatable');
     }
 }
-
