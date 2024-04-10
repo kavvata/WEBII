@@ -4,8 +4,8 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class datatable extends Component {
-
+class Datatable extends Component
+{
     public $title;
     public $header;
     public $crud;
@@ -17,8 +17,8 @@ class datatable extends Component {
     public $id;
     public $modal;
 
-    public function __construct($title, $header, $crud, $dados, $fields, $hide, $remove, $create, $id, $modal) {
-
+    public function __construct($title, $header, $crud, $dados, $fields, $hide, $remove, $create, $id, $modal)
+    {
         $this->title = $title;
         $this->header = $header;
         $this->crud = $crud;
@@ -31,7 +31,9 @@ class datatable extends Component {
         $this->dados = $dados;
     }
 
-    public function render() {
+    public function render()
+    {
         return view('components.datatable');
     }
 }
+
