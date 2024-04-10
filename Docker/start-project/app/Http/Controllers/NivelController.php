@@ -22,15 +22,14 @@ class NivelController extends Controller
     {
         $data = $this->repository->selectAllWith(['curso']);
         return view('nivel.index', compact('data'));
-        // return $data;
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): void
+    public function create()
     {
-        //
+        return view('nivel.create');
     }
 
     /**
@@ -42,7 +41,7 @@ class NivelController extends Controller
         $obj->nome = mb_strtoupper($request->nome, 'UTF-8');
         $this->repository->save($obj);
 
-        return '<h1>Store - OK!</h1>';
+        return redirect()->route('nivel.index');
     }
 
     /**
