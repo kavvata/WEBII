@@ -8,7 +8,12 @@
         <x-textbox name="nome" label="Nome" type="text" value="null" disabled="false"/>
         <x-textbox name="email" label="E-mail" type="email" value="null" disabled="false"/>
         <x-textbox name="senha" label="Senha" type="password" value="null" disabled="false"/>
-        <x-selectbox name="curso_id" label="Curso" color="success" :data="$cursos" field="nome" disabled="false" select="-1"/>
+        @if(strcmp($nome, "PROFESSOR") == 0)
+            <x-selectbox name="curso" label="Curso" color="success" :data="$cursos" field="nome" disabled="true" :select="Auth::user()->curso_id"/>
+            <input type="hidden" name="curso_id" value="{{Auth::user()->curso_id}}">
+        @else
+            <x-selectbox name="curso_id" label="Curso" color="success" :data="$cursos" field="nome" disabled="false" select="-1"/>
+        @endif
         <x-selectbox name="papel" label="Papel" color="success" :data="$roles" field="nome" disabled="true" :select="$role_id"/>
         <div class="row">
             <div class="col text-start">
