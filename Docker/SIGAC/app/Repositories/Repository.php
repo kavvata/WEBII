@@ -13,11 +13,17 @@ class Repository {
         $this->model = $model;
     }
 
-    public function selectAll() {
+    public function selectAll(object $paginate) {
+        if($paginate->use) 
+            return $this->model->paginate($paginate->rows);
+
         return $this->model->all();
     }
 
-    public function selectAllWith(array $orm) {
+    public function selectAllWith(array $orm, object $paginate) {
+        if($paginate->use) 
+            return $this->model::with($orm)->paginate($paginate->rows);
+        
         return $this->model::with($orm)->get();
     }
    
@@ -45,11 +51,17 @@ class Repository {
         return $this->model->find($id)->first();
     }
 
-    public function findByColumn($column, $value) {
+    public function findByColumn($column, $value, object $paginate) {
+        if($paginate->use) 
+            return $this->model->where($column, $value)->paginate($paginate->rows);
+
         return $this->model->where($column, $value)->get();
     }
 
-    public function findByColumnWith($column, $value, $orm) {
+    public function findByColumnWith($column, $value, $orm, object $paginate) {
+        if($paginate->use) 
+            return $this->model::with($orm)->where($column, $value)->paginate($paginate->rows);
+        
         return $this->model::with($orm)->where($column, $value)->get();
     }
 

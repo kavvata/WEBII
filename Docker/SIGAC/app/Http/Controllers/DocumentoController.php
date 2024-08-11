@@ -2,37 +2,73 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\HourRegister;
 use App\Models\Documento;
 use Illuminate\Http\Request;
 use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Auth;
 use App\Repositories\CategoriaRepository;
 use App\Repositories\DocumentoRepository;
 
 class DocumentoController extends Controller {
     
     protected $repository;
-    private $user_id = 5;
-    private $curso_id = 2;
     private $path = "documentos/alunos";
-
+    private $rules = [
+        'descricao' => 'required|min:5|max:200',
+        'horas' => 'required',
+        'categoria_id' => 'required',
+        'documento' => 'required',
+    ];
+    private $messages = [
+        "required" => "O preenchimento do campo [:attribute] é obrigatório!",
+        "max" => "O campo [:attribute] possui tamanho máximo de [:max] caracteres!",
+        "min" => "O campo [:attribute] possui tamanho mínimo de [:min] caracteres!",
+    ];
+    
     public function __construct(){
         $this->repository = new DocumentoRepository();
     }
     
     public function index() {
-        $data = $this->repository->findByColumnWith('user_id', $this->user_id, ['categoria']);
+
+        $this->authorize('hasFullPermission', Documento::class);
+        $data = $this->repository->findByColumnWith(
+            'user_id', 
+            Auth::user()->id, 
+            ['categoria'],
+            (object) ["use" => true, "rows" => $this->repository->getRows()]
+        );
         return view('documento.index', compact('data'));
     }
 
     public function create() {
-        $categorias = (new CategoriaRepository())->findByColumn('curso_id', $this->curso_id);
+
+        $this->authorize('hasFullPermission', Documento::class);
+        $categorias = (new CategoriaRepository())->findByColumn(
+            'curso_id', 
+            Auth::user()->curso_id,
+            (object) ["use" => false, "rows" => 0]
+        );
         return view('documento.create', compact('categorias'));
     }
 
     public function store(Request $request) {
+     
+        $this->authorize('hasFullPermission', Documento::class);
+        // Registra o Evento HourRegister
+        event(
+            new HourRegister(
+                Auth::user(),
+                $request->categoria_id,
+                mb_strtoupper($request->descricao, 'UTF-8'),
+                $request->horas,
+            )
+        );
         
+        $request->validate($this->rules, $this->messages);
         $objCategoria = (new CategoriaRepository())->findById($request->categoria_id);
-        $objUser = (new UserRepository())->findById($this->user_id);
+        $objUser = (new UserRepository())->findById(Auth::user()->id);
 
         if($request->hasFile('documento') && isset($objCategoria) && isset($objUser)) {
             // Registra a Solicitação
@@ -60,9 +96,14 @@ class DocumentoController extends Controller {
             ->with('link', "documento.index");
     }
 
-    public function show(string $id)
-    {
-        $categorias = (new CategoriaRepository())->findByColumn('curso_id', $this->curso_id);
+    public function show(string $id) {
+
+        $this->authorize('hasFullPermission', Documento::class);
+        $categorias = (new CategoriaRepository())->findByColumn(
+            'curso_id', 
+            Auth::user()->curso_id,
+            (object) ["use" => false, "rows" => 0]
+        );
         $data = $this->repository->findByIdWith(['categoria'], $id);
         $data = $this->repository->mapStatus($data);
         
@@ -80,7 +121,12 @@ class DocumentoController extends Controller {
 
     public function edit(string $id) {
 
-        $categorias = (new CategoriaRepository())->findByColumn('curso_id', $this->curso_id);
+        $this->authorize('hasFullPermission', Documento::class);
+        $categorias = (new CategoriaRepository())->findByColumn(
+            'curso_id', 
+            Auth::user()->curso_id,
+            (object) ["use" => false, "rows" => 0]
+        );
         $data = $this->repository->findById($id);
 
         // Permite alteração apenas para status solicitado
@@ -99,6 +145,7 @@ class DocumentoController extends Controller {
 
     public function update(Request $request, string $id) {
         
+        $this->authorize('hasFullPermission', Documento::class);
         $obj = $this->repository->findById($id);
         $objCategoria = (new CategoriaRepository())->findById($request->categoria_id);
         
@@ -128,6 +175,7 @@ class DocumentoController extends Controller {
 
     public function destroy(string $id) {
         
+        $this->authorize('hasFullPermission', Documento::class);
         $data = $this->repository->findById($id);
 
         // Permite a remoção apenas para status solicitado
@@ -147,14 +195,14 @@ class DocumentoController extends Controller {
 
     public function list() {
 
-        $data = $this->repository->getDocumentsToAssess($this->curso_id);
-        // return $data;
+        $this->authorize('hasAssessPermission', Documento::class);
+        $data = $this->repository->getDocumentsToAssess(Auth::user()->curso_id, true);
         return view('documento.list', compact(['data']));
     }
 
     public function finish(Request $request, string $id) {
 
-        // dd($request);
+        $this->authorize('hasAssessPermission', Documento::class);
         $obj = $this->repository->findById($id);
         $horas_out = $request->input('horas_out_'.$id);
 
