@@ -18,18 +18,18 @@ class NivelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): object
+    public function index()
     {
-        $data = $this->repository->selectAll();
-        return $data;
+        $data = $this->repository->selectAllWith(['curso']);
+        return view('nivel.index', compact('data'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): void
+    public function create()
     {
-        //
+        return view('nivel.create');
     }
 
     /**
@@ -41,7 +41,7 @@ class NivelController extends Controller
         $obj->nome = mb_strtoupper($request->nome, 'UTF-8');
         $this->repository->save($obj);
 
-        return '<h1>Store - OK!</h1>';
+        return redirect()->route('nivel.index');
     }
 
     /**
